@@ -1,0 +1,39 @@
+
+<div>
+    <div style="width: 300px; margin-top: 50px; margin-left: 10px;">
+        <form>
+            <div class="custom-file">
+                <input type="file" #csvReader class="custom-file-input" id="customFile" (change)="uploadListener($event)" accept=".csv" >
+                <label class="custom-file-label" for="customFile" >Choose file</label>
+              </div>
+        </form>
+
+        <br>
+        <button type="button" class="btn btn-primary" (click)= "exportFile()" *ngIf = "header && header[0]" >Download</button>
+        &nbsp;
+        <button type="button" class="btn btn-light" (click)= "fileReset()" *ngIf = "header && header[0]" >clear</button>
+    </div>
+    <br><br>
+
+    <div>
+        <table class="table table-sm" *ngIf = "header && header[0]">
+            <thead>
+                <tr>
+                    <th scope="col" *ngFor="let h of header; let i = index">
+                        <a href="javascript:;" class="previous round" *ngIf="i != 0" (click)= "moveColumn(i,i-1)">&#8249;</a> 
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [id]="i" [checked] = "checkedHeader[i]" (change)= "checkInvert(i)">
+                            <label class="custom-control-label" [for]="i">{{h}}</label>
+                        </div>
+                        <a href="javascript:;" class="previous round" *ngIf="i != header.length-1" (click)= "moveColumn(i,i+1)">&#8250;</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let rec of records;">
+                <td *ngFor="let r of rec;">{{r}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
